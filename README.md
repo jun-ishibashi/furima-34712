@@ -51,7 +51,7 @@ has_one :shipping_address
 |Column         |Type        |Options                         |
 |---------------|------------|--------------------------------|
 | postcode      | string     | null: false                    |
-| prefecture_id | string     | null: false                    |
+| prefecture_id | integer    | null: false                    |
 | city          | string     | null: false                    |
 | block         | string     | null: false                    |
 | building      | string     |                                |
