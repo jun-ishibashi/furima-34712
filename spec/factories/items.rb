@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :item do
-    name { "タケコプター" }
-    description { "空を飛べる" }
+    name { 'タケコプター' }
+    description { '空を飛べる' }
     category_id { 1 }
     condition_id { 1 }
     payment_id { 1 }
