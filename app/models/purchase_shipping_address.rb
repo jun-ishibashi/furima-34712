@@ -1,6 +1,6 @@
 class PurchaseShippingAddress
   include ActiveModel::Model
-  attr_accessor :postcode, :prefecture, :city, :block, :building, :phone_number, :user_id, :item_id, :price, :token
+  attr_accessor :postcode, :prefecture, :city, :block, :building, :phone_number, :user_id, :item_id, :token
 
   with_options presence: true do
     validates :user_id

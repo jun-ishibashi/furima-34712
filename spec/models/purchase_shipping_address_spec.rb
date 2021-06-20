@@ -10,10 +10,10 @@ RSpec.describe PurchaseShippingAddress, type: :model do
     end
 
     context '商品が購入できる場合' do
-      it 'すべての値が正しく入力されていれば保存できること' do
+      it 'すべての値が正しく入力されていれば購入できること' do
         expect(@purchase_shipping_address).to be_valid
       end
-      it 'buildingは空でも保存できること' do
+      it 'buildingは空でも購入できること' do
         @purchase_shipping_address.building = ''
         expect(@purchase_shipping_address).to be_valid
       end
@@ -55,17 +55,22 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include('Phone number is invalid.')
       end
-      it 'tokenが空では登録できないこと' do
+      it 'phone_numberが英数混合では購入できないこと' do
+        @purchase_shipping_address.phone_number = '1112222aaaab'
+        @purchase_shipping_address.valid?
+        expect(@purchase_shipping_address.errors.full_messages).to include('Phone number is invalid.')
+      end
+      it 'tokenが空では購入できないこと' do
         @purchase_shipping_address.token = nil
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include("Token can't be blank")
       end
-      it 'userが紐付いていないと保存できないこと' do
+      it 'userが紐付いていないと購入できないこと' do
         @purchase_shipping_address.user_id = nil
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include("User can't be blank")
       end
-      it 'itemが紐付いていないと保存できないこと' do
+      it 'itemが紐付いていないと購入できないこと' do
         @purchase_shipping_address.item_id = nil
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include("Item can't be blank")

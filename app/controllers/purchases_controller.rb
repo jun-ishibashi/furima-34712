@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :create]
-  before_action :item_set, only: [:index, :create]
-  before_action :move_to_index, only: [:index, :create]
+  before_action :authenticate_user!
+  before_action :item_set
+  before_action :move_to_index
 
   def index
     @purchase_shipping_address = PurchaseShippingAddress.new
@@ -21,16 +21,15 @@ class PurchasesController < ApplicationController
   private
 
   def purchase_shipping_address_params
-    price = Item.find_by(id: params[:item_id]).price
     params.require(:purchase_shipping_address).permit(:postcode, :prefecture, :city, :block, :building, :phone_number).merge(
-      user_id: current_user.id, item_id: params[:item_id], token: params[:token], price: price
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
     )
   end
 
   def pay_item
     Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
-      amount: purchase_shipping_address_params[:price],
+      amount: @item.price,
       card: purchase_shipping_address_params[:token],
       currency: 'jpy'
     )
