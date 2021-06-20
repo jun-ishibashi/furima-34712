@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
-  # before_action :authenticate_user!, except: [:index, :show]
-  # before_action :move_to_index, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:index, :create]
   before_action :item_set, only: [:index, :create]
+  before_action :move_to_index, only: [:index, :create]
 
   def index
     @purchase_shipping_address = PurchaseShippingAddress.new
@@ -38,5 +38,9 @@ class PurchasesController < ApplicationController
 
   def item_set
     @item = Item.find_by(id: params[:item_id])
+  end
+
+  def move_to_index
+    redirect_to root_path if current_user == @item.user || @item.purchase.present?
   end
 end
