@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe PurchaseShippingAddress, type: :model do
-
   describe '商品の購入' do
     before do
       user = FactoryBot.create(:user)
@@ -29,7 +28,7 @@ RSpec.describe PurchaseShippingAddress, type: :model do
       it 'postal_codeが半角のハイフンを含んでいないと購入できないこと' do
         @purchase_shipping_address.postcode = '1234567'
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Postcode is invalid. Include hyphen(-)")
+        expect(@purchase_shipping_address.errors.full_messages).to include('Postcode is invalid. Include hyphen(-)')
       end
       it 'prefectureを選択していないと購入できないこと' do
         @purchase_shipping_address.prefecture = 0
@@ -54,7 +53,7 @@ RSpec.describe PurchaseShippingAddress, type: :model do
       it 'phone_numberが12桁以上だと購入できないこと' do
         @purchase_shipping_address.phone_number = '111222233334'
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Phone number is invalid.")
+        expect(@purchase_shipping_address.errors.full_messages).to include('Phone number is invalid.')
       end
       it 'userが紐付いていないと保存できないこと' do
         @purchase_shipping_address.user_id = nil
@@ -68,6 +67,4 @@ RSpec.describe PurchaseShippingAddress, type: :model do
       end
     end
   end
-
 end
-
